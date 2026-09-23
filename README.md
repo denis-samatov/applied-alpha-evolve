@@ -21,9 +21,9 @@ three open-source evolutionary frameworks — OpenAlpha_Evolve, OpenEvolve, and
 MetaEvolve — on a circle-packing optimization task, using AlphaEvolve as the reference
 benchmark. The analysis covers both framework architecture and the effect of different
 LLMs. We also add logging and visualization tooling to better understand the
-evolutionary process and how different models behave. Experimental results show that
-MetaEvolve, using Qwen models, achieves the best solution quality among the open
-frameworks (sum of radii = 2.6238), slightly behind the AlphaEvolve reference (2.635).
+evolutionary process and how different models behave. The included report states that
+MetaEvolve, using Qwen models, achieved the best solution quality among the open
+frameworks studied (sum of radii = 2.6238), below the AlphaEvolve reference (2.635).
 This work lays a foundation for further research into LLM-driven evolutionary
 algorithms for optimization.
 
@@ -73,7 +73,7 @@ algorithms for optimization.
 ## 🛠️ Tech stack
 
 ### Core technologies
-- **Python 3.8+** — primary language
+- **Python 3.9+** — primary language (minimum declared by the vendored OpenEvolve package)
 - **AsyncIO** — asynchronous programming
 - **Redis** — high-performance state storage
 - **Docker** — containerization and isolation
@@ -91,13 +91,12 @@ algorithms for optimization.
 ## 🚀 Running it (OpenEvolve example)
 
 System requirements
-- Python 3.8+
+- Python 3.9+
 - Docker (optional)
 - vLLM (for running models locally)
 
-LLM API access
-- OpenAI API key
-- Mistral API key (optional)
+LLM API access for the configuration below
+- An OpenRouter-compatible API key. The configured models and provider may incur charges.
 
 ```bash
 # Clone the repository
@@ -108,13 +107,18 @@ cd applied-alpha-evolve
 cd open_evolve
 pip install -e .
 
-# Configure
-# examples/circle_packing/config_phase_1.yaml
-# examples/circle_packing/config_phase_2.yaml
+# Configure a credential for the OpenRouter endpoint in config_phase_1.yaml.
+# Do not commit the key or paste it into a YAML file.
+export OPENAI_API_KEY='<provider-api-key>'
 
-# Run the example
-python examples/circle_packing/run_evolution.py
+# Run phase 1 from the open_evolve directory.
+python openevolve-run.py examples/circle_packing/initial_program.py \
+  examples/circle_packing/evaluator.py \
+  --config examples/circle_packing/config_phase_1.yaml \
+  --iterations 100
 ```
+
+This command is the actual CLI path in the repository. It requires a live LLM provider; the study results in the report were not regenerated as part of the repository audit. See the [circle-packing notes](open_evolve/examples/circle_packing/README.md) for the two-phase experiment and its checkpoint dependency.
 
 ## Licensing
 

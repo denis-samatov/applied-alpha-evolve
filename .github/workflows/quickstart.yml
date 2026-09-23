@@ -1,0 +1,20 @@
+name: OpenEvolve configuration
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install vendored OpenEvolve and test runner
+        run: |
+          python -m pip install -e ./open_evolve
+          python -m pip install pytest
+      - name: Validate example configurations
+        run: PYTHONPATH=open_evolve python -m pytest -q open_evolve/tests/test_valid_configs.py

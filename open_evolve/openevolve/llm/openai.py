@@ -24,7 +24,6 @@ class OpenAILLM(LLMInterface):
         self,
         model_cfg: Optional[dict] = None,
     ):  
-        print(model_cfg, flush=True)
         self.model = model_cfg.name
         self.system_message = model_cfg.system_message
         self.temperature = model_cfg.temperature
