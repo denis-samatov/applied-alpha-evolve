@@ -18,6 +18,8 @@ class LLMModelConfig:
 
     # Weight for model in ensemble
     weight: float = 1.0
+    api_base: Optional[str] = None
+    api_key: Optional[str] = field(default=None, repr=False)
 
     # Generation parameters
     system_message: Optional[str] = None
@@ -60,12 +62,12 @@ class LLMConfig(LLMModelConfig):
     primary_model: str = None
     primary_model_weight: float = None
     primary_model_api_base: str = None
-    primary_model_api_key: float = None
+    primary_model_api_key: Optional[str] = field(default=None, repr=False)
 
     secondary_model: str = None
     secondary_model_weight: float = None
     secondary_model_api_base: str = None
-    secondary_model_api_key: float = None
+    secondary_model_api_key: Optional[str] = field(default=None, repr=False)
 
     def __post_init__(self):
         """Post-initialization to set up model configurations"""
@@ -101,6 +103,8 @@ class LLMConfig(LLMModelConfig):
 
         # Update models with shared configuration values
         shared_config = {
+            "api_base": self.api_base,
+            "api_key": self.api_key,
             "temperature": self.temperature,
             "top_p": self.top_p,
             "max_tokens": self.max_tokens,
@@ -359,11 +363,14 @@ def load_config(config_path: Optional[Union[str, Path]] = None) -> Config:
     else:
         config = Config()
 
-        # Use environment variables if available
-        api_key = os.environ.get("OPENAI_API_KEY")
+        # Use the default API endpoint when no file supplies one.
         api_base = os.environ.get("OPENAI_API_BASE", "https://api.openai.com/v1")
+        config.llm.update_model_params({"api_base": api_base})
 
-        config.llm.update_model_params({"api_key": api_key, "api_base": api_base})
+    # A configured provider still needs its credential from the environment.
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if api_key:
+        config.llm.update_model_params({"api_key": api_key})
 
     # Make the system message available to the individual models, in case it is not provided from the prompt sampler
     config.llm.update_model_params({"system_message": config.prompt.system_message})

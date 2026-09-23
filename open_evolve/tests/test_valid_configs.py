@@ -35,6 +35,19 @@ class TestConfigValidity(unittest.TestCase):
             )
             self.assertTrue(len(config.llm.models) > 0)
 
+    def test_circle_packing_config_uses_environment_credential(self):
+        config_file = os.path.join(
+            os.path.dirname(__file__),
+            "../examples/circle_packing/config_phase_1.yaml",
+        )
+        with patch.dict(os.environ, {"OPENAI_API_KEY": "test-credential"}):
+            config = load_config(config_file)
+
+        for model in config.llm.models + config.llm.evaluator_models:
+            self.assertEqual(model.api_base, "https://openrouter.ai/api/v1")
+            self.assertEqual(model.api_key, "test-credential")
+            self.assertNotIn("test-credential", repr(model))
+
 
 if __name__ == "__main__":
     unittest.main()
