@@ -11,3 +11,9 @@ open_evolve/
 
 Redistribution of open_evolve/ must comply with the Apache License 2.0,
 including retention of its copyright and license notices.
+
+Local remediation note: this checkout adds numeric JSON candidate IPC and feasibility
+regressions to the vendored OpenEvolve examples. The original upstream commit ID was
+not recorded in the inherited snapshot and has not been reconstructed here; the
+current repository base SHA/patch distinguishes this local derivative. See
+`docs/experiment_acceptance.md` for comparison and trust boundaries.

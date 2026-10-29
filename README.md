@@ -133,3 +133,6 @@ This repository mixes licenses:
   directory.
 
 See [`NOTICE`](NOTICE) for the full breakdown.
+
+
+[Correctness, trusted-local execution and new-study acceptance](docs/experiment_acceptance.md).
