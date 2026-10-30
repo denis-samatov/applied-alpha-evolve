@@ -4,9 +4,10 @@
 
 *Next-Gen LLMs track project, AIRI Summer School 2025*
 
-A comparative study of three open-source LLM-driven evolutionary search frameworks —
-OpenAlpha_Evolve, OpenEvolve, and MetaEvolve — benchmarked against Google's AlphaEvolve
-on a circle-packing optimization task.
+A historical comparison of three LLM-driven evolutionary systems — OpenAlpha_Evolve,
+OpenEvolve and the closed-source MetaEvolve — on circle packing, with Google's AlphaEvolve
+as a reported reference. Only the vendored OpenEvolve implementation is executable here;
+matched-budget scientific superiority is not independently established by this repository.
 
 [**Report**](report.pdf) | [**Slides**](slides.pdf)
 
@@ -17,7 +18,7 @@ Recent advances in automated solution search — exemplified by Google's
 of combining large language models with evolutionary search to solve hard optimization
 problems. AlphaEvolve sets a new standard in this space by pairing model-based candidate
 generation with rigorous evaluation. In this study, we run a comparative analysis of
-three open-source evolutionary frameworks — OpenAlpha_Evolve, OpenEvolve, and
+three evolutionary systems — OpenAlpha_Evolve, OpenEvolve, and the closed-source
 MetaEvolve — on a circle-packing optimization task, using AlphaEvolve as the reference
 benchmark. The analysis covers both framework architecture and the effect of different
 LLMs. We also add logging and visualization tooling to better understand the
@@ -26,6 +27,23 @@ MetaEvolve, using Qwen models, achieved the best solution quality among the open
 frameworks studied (sum of radii = 2.6238), below the AlphaEvolve reference (2.635).
 This work lays a foundation for further research into LLM-driven evolutionary
 algorithms for optimization.
+
+## Execution boundary
+
+Evaluation is **disabled by default** before importing evaluator plugins or running candidates.
+This repository does not provide an OS sandbox. Unreviewed or LLM-generated code must run in an
+externally provisioned no-network/no-secret sandbox with memory/disk/CPU limits and read-only
+source inputs. Timeouts, threads, subprocesses and Docker's mere presence do not prove isolation.
+Only for individually reviewed trusted local code, or from inside that qualified sandbox, set:
+
+```bash
+export OPENEVOLVE_ALLOW_UNSANDBOXED_EXECUTION=1
+```
+
+This acknowledges host-user execution rights; it does not create isolation. Keep it unset during
+ordinary inspection/configuration work. Tests acknowledge only repository-authored scratch
+fixtures; explicit negative tests remove the flag and verify no marker/plugin code runs.
+Historical comparative report values were not rerun with this policy or a matched-budget study.
 
 ## 📁 Frameworks studied
 
@@ -76,7 +94,7 @@ algorithms for optimization.
 - **Python 3.9+** — primary language (minimum declared by the vendored OpenEvolve package)
 - **AsyncIO** — asynchronous programming
 - **Redis** — high-performance state storage
-- **Docker** — containerization and isolation
+- **Docker** — containerization; hostile-code isolation is not supplied or qualified here
 
 ### Frameworks and libraries
 - **Pydantic** — data validation and typing

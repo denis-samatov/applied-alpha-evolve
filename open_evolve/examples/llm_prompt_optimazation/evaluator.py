@@ -2,6 +2,7 @@
 Evaluator for the prompt optimization task.
 """
 
+from openevolve.utils.execution_policy import require_execution_consent
 import re
 import traceback
 import json
@@ -64,6 +65,7 @@ def evaluate(prompt_path):
     Returns:
         Dictionary of metrics
     """
+    require_execution_consent()
     print('-' * 80)
     print("Starting evaluation...")
     print('-' * 80)

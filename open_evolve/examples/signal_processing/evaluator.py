@@ -12,6 +12,7 @@ Where:
 - α₁=0.3, α₂=α₃=0.2, α₄=0.3: Weighting coefficients
 """
 
+from openevolve.utils.execution_policy import require_execution_consent
 import importlib.util
 import numpy as np
 import time
@@ -259,6 +260,7 @@ def evaluate(program_path):
     Main evaluation function that tests the signal processing algorithm
     on multiple test signals and calculates the composite performance metric.
     """
+    require_execution_consent()
     try:
         # Load the program
         spec = importlib.util.spec_from_file_location("program", program_path)
@@ -452,6 +454,7 @@ def evaluate_stage1(program_path):
     """
     Stage 1 evaluation: Quick validation that the program runs without errors
     """
+    require_execution_consent()
     try:
         # Load the program
         spec = importlib.util.spec_from_file_location("program", program_path)
@@ -522,4 +525,5 @@ def evaluate_stage2(program_path):
     """
     Stage 2 evaluation: Full evaluation with all test signals
     """
+    require_execution_consent()
     return evaluate(program_path)

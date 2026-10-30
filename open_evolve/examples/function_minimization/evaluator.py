@@ -2,6 +2,7 @@
 Evaluator for the function minimization example
 """
 
+from openevolve.utils.execution_policy import require_execution_consent
 import importlib.util
 import numpy as np
 import time
@@ -52,6 +53,7 @@ def evaluate(program_path):
     Returns:
         Dictionary of metrics
     """
+    require_execution_consent()
     # Known global minimum (approximate)
     GLOBAL_MIN_X = -1.704
     GLOBAL_MIN_Y = 0.678
@@ -238,6 +240,7 @@ def evaluate(program_path):
 # Stage-based evaluation for cascade evaluation
 def evaluate_stage1(program_path):
     """First stage evaluation with fewer trials"""
+    require_execution_consent()
     # Known global minimum (approximate)
     GLOBAL_MIN_X = float(-1.704)
     GLOBAL_MIN_Y = float(0.678)
@@ -340,5 +343,6 @@ def evaluate_stage1(program_path):
 
 def evaluate_stage2(program_path):
     """Second stage evaluation with more thorough testing"""
+    require_execution_consent()
     # Full evaluation as in the main evaluate function
     return evaluate(program_path)

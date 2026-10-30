@@ -2,6 +2,7 @@
 Evaluator for Rust adaptive sorting example
 """
 
+from openevolve.utils.execution_policy import require_execution_consent
 import asyncio
 import json
 import os
@@ -26,6 +27,7 @@ async def evaluate(program_path: str) -> EvaluationResult:
     - Adaptability to different data patterns
     - Memory efficiency
     """
+    require_execution_consent()
     try:
         # Create a temporary Rust project
         with tempfile.TemporaryDirectory() as temp_dir:

@@ -2,6 +2,7 @@
 Evaluator for circle packing example (n=26) with improved timeout handling
 """
 
+from openevolve.utils.execution_policy import require_execution_consent
 import numpy as np
 import time
 import traceback
@@ -79,6 +80,7 @@ def evaluate(program_path):
     Returns:
         Dictionary of metrics
     """
+    require_execution_consent()
     # Target value from the paper
     TARGET_VALUE = 2.635  # AlphaEvolve result for n=26
 
@@ -157,6 +159,7 @@ def evaluate_stage1(program_path):
     """
     First stage evaluation - quick validation check
     """
+    require_execution_consent()
     try:
         # Use the simplified subprocess approach
         try:
@@ -211,5 +214,6 @@ def evaluate_stage2(program_path):
     """
     Second stage evaluation - full evaluation
     """
+    require_execution_consent()
     # Full evaluation as in the main evaluate function
     return evaluate(program_path)
