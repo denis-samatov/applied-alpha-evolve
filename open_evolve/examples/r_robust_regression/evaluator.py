@@ -2,6 +2,7 @@
 Evaluator for R robust regression example
 """
 
+from openevolve.utils.execution_policy import require_execution_consent
 import asyncio
 import json
 import os
@@ -25,6 +26,7 @@ async def evaluate(program_path: str) -> EvaluationResult:
     - Robustness to outliers
     - Computational efficiency
     """
+    require_execution_consent()
     try:
         # Generate test datasets with different outlier levels
         test_cases = [

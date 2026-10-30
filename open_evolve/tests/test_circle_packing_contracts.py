@@ -58,3 +58,18 @@ def test_candidate_timeout_is_bounded(name, tmp_path):
     module = evaluator(name)
     with pytest.raises(module.TimeoutError):
         module.run_with_timeout(str(program), .2)
+
+
+@pytest.mark.parametrize("name", ["circle_packing", "circle_packing_with_artifacts", "saved_circle_packing"])
+def test_positive_feasible_objective_ignores_candidate_reported_total(name, tmp_path):
+    program = tmp_path / "positive.py"
+    program.write_text('''import numpy as np
+def run_packing():
+    centers = np.column_stack([np.linspace(.1, .9, 26), np.full(26, .5)])
+    return centers, np.full(26, .01), 100.0
+''')
+    result = evaluator(name).evaluate(str(program))
+    metrics = result.metrics if hasattr(result, "metrics") else result
+    # Analytic fixture: min spacing .8/25 > .02, interior radii .01, true sum26*.01.
+    assert metrics["sum_radii"] == pytest.approx(.26)
+    assert metrics["validity"] == 1.0

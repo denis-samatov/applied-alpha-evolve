@@ -2,6 +2,7 @@
 Evaluator for the function minimization example
 """
 
+from openevolve.utils.execution_policy import require_execution_consent
 import re
 import subprocess
 import time
@@ -60,6 +61,7 @@ def evaluate(program_path):
     Returns:
         Dictionary of metrics
     """
+    require_execution_consent()
     try:
         # For constructor-based approaches, a single evaluation is sufficient
         # since the result is deterministic

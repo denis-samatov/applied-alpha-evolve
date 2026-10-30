@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 import traceback
 
+from openevolve.utils.execution_policy import require_execution_consent
 from openevolve.config import EvaluatorConfig
 from openevolve.database import ProgramDatabase
 from openevolve.evaluation_result import EvaluationResult
@@ -45,6 +46,7 @@ class Evaluator:
         prompt_sampler: Optional[PromptSampler] = None,
         database: Optional[ProgramDatabase] = None,
     ):
+        require_execution_consent()
         self.config = config
         self.evaluation_file = evaluation_file
         self.llm_ensemble = llm_ensemble
@@ -64,6 +66,7 @@ class Evaluator:
 
     def _load_evaluation_function(self) -> None:
         """Load the evaluation function from the evaluation file"""
+        require_execution_consent()
         if not os.path.exists(self.evaluation_file):
             raise ValueError(f"Evaluation file {self.evaluation_file} not found")
 
@@ -108,6 +111,7 @@ class Evaluator:
         Returns:
             Dictionary of metric name to score
         """
+        require_execution_consent()
         start_time = time.time()
         program_id_str = f" {program_id}" if program_id else ""
 

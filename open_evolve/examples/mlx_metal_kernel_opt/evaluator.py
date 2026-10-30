@@ -24,6 +24,7 @@ This evaluator provides MAXIMUM protection against Metal kernel failures during 
 - Safe cleanup of GPU resources
 """
 
+from openevolve.utils.execution_policy import require_execution_consent
 import os
 import sys
 import json
@@ -112,6 +113,7 @@ class BulletproofMetalEvaluator:
         5. Armored benchmarking with command buffer protection
         6. Comprehensive Metal error recovery and statistics
         """
+        require_execution_consent()
 
         print("\n" + "🛡️ " * 50)
         print("🛡️  BULLETPROOF METAL KERNEL EVALUATION STARTING")
@@ -1355,6 +1357,7 @@ class BulletproofMetalEvaluator:
 
 def evaluate(program_text: str) -> Dict[str, Any]:
     """🛡️ BULLETPROOF evaluation function called by OpenEvolve"""
+    require_execution_consent()
     evaluator = BulletproofMetalEvaluator()
     return evaluator.evaluate(program_text)
 

@@ -12,6 +12,8 @@ import tempfile
 
 import numpy as np
 
+from openevolve.utils.execution_policy import require_execution_consent
+
 
 _CHILD = '''import importlib.util, json, pathlib, sys
 import numpy as np
@@ -33,6 +35,7 @@ pathlib.Path(output).write_text(text, encoding="utf-8")
 
 def run_numeric_candidate(program_path, timeout_seconds=20):
     """Run a trusted candidate without provider credentials or executable result data."""
+    require_execution_consent()
     if timeout_seconds <= 0:
         raise ValueError("timeout_seconds must be positive")
     program = str(Path(program_path).resolve(strict=True))
