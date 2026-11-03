@@ -1,6 +1,8 @@
 ---
 applyTo: 'scripts/**/*.js'
 ---
+
+- If repository documentation conflicts with the existing code, follow the conventions established in the code and report each discrepancy you find between the documentation and the code in your final response.
 - In this program, a dataset with nodes and edges is visualized in different graphs and lists. These view modes are selectable in tabs.
 - Nodes are parametrized with meta data including program ID, island number, generation nunmber, parent ID (which is used to determine the edge connections), a metric dataset with flexible keys, a code string, a dict with prompts and more. All data except program ID are optional.
 - A sidebar shows detailed node information. Its format is the same across all view modes.
